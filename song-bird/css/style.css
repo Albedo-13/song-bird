@@ -1,0 +1,13 @@
+:root {
+  font-family: Verdana, Tahoma, sans-serif;
+  font-weight: 400;
+}
+
+body {
+  background-color: gray;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1100px;
+}/*# sourceMappingURL=style.css.map */
