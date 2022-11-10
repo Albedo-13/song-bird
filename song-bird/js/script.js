@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ++quizPage;
         correntAnswerNumber = randomNumber(6);
-        birdDescr.innerHTML = generateBirdCard(quizPage, randomNumber(6));
+        birdDescr.innerHTML = generateInstruction();
         birdsQuiz.innerHTML = generateQuizOptions(quizPage);
         generateQuizQuestion(quizPage);
         addAnswersClickEvent();
@@ -89,15 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function generateQuizQuestion(page) {
+    birdsQuestion.querySelector("h3").innerText = "******";
+    birdsQuestion.querySelector("img").setAttribute('src', '/assets/img/anon-bird.jpg');
     birdsQuestion.querySelector("audio").setAttribute('src', `${birdsData[page][correntAnswerNumber].audio}`);
   }
 
   function generateQuizQuestionAnswered(page) {
     birdsQuestion.querySelector("h3").innerText = birdsData[page][correntAnswerNumber].name;
     birdsQuestion.querySelector("img").setAttribute('src', birdsData[page][correntAnswerNumber].image);
-    // console.log(page);
-    // console.log(correntAnswerNumber);
-    // console.log(birdsData[page][correntAnswerNumber]);
   }
 
   function generateQuizOptions(page) {
@@ -111,6 +110,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][4].name}</li>
       <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][5].name}</li>
     </ul>
+    `;
+  }
+
+  function generateInstruction() {
+    return `
+    <p class="instruction" style="display: block;">
+      <span>Послушайте плеер.</span>
+      <span>Выберите птицу из списка</span>
+    </p>
     `;
   }
 
