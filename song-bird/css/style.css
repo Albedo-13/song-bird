@@ -10,4 +10,12 @@ body {
 .container {
   margin: 0 auto;
   max-width: 1100px;
+}
+
+.success {
+  background-color: green;
+}
+
+.error {
+  background-color: red;
 }/*# sourceMappingURL=style.css.map */

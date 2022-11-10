@@ -386,12 +386,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1) подтягивать с помощью json-server'а информацию о птицах
-  // https://www.udemy.com/course/javascript_full/learn/lecture/19573976#overview
-  // 2) и сделать квиз табами?
-  // https://getbootstrap.com/docs/5.2/components/navs-tabs/#tabs
-  // 3) нужно сделать кастомный плеер (rss temp папка)
+  //! TODO: после правильного ответа снимать обр. событий
+  //! TODO: Блокировать кнопку Next Level до правильного ответа
 
+  // TODO: переработать имена, вложенности и зависимости
+  // TODO: нужно сделать кастомный плеер (rss temp папка)
+  // TODO: вебпак
 
   const pagination = document.querySelector('.pagination');
   const nextLevelBtn = document.querySelector('.next-level');
@@ -404,14 +404,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (i + 1 >= pagination.children.length) {
           console.log("ПОБЕДА!");
           pagination.children[i].classList.remove("active");
-          
+
           return;
         }
         pagination.children[i].classList.remove("active");
         pagination.children[i + 1].classList.add("active");
+
         ++quizPage;
-        birdDescr.innerHTML = generateBirdCard(quizPage, 2);
-        
+        correntAnswerNumber = randomNumber(6);
+        birdDescr.innerHTML = generateBirdCard(quizPage, randomNumber(6));
+        birdsQuiz.innerHTML = generateQuizOptions(quizPage);
+        generateQuizQuestion(quizPage);
+        answersClickEvent();
         // console.log(birdsData[quizPage][2].name);
         return;
       }
@@ -419,9 +423,59 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   let quizPage = 0;
+  // TODO: скрыть correntAnswerNumber
+  let correntAnswerNumber = randomNumber(6);
   const birdDescr = document.querySelector(".bird-descr-container");
+  const birdsQuiz = document.querySelector(".birds-quiz");
+  const birdsQuestion = document.querySelector(".random-bird audio");
 
-  birdDescr.innerHTML = generateBirdCard(quizPage, 2);
+  // birdDescr.innerHTML = generateBirdCard(quizPage, randomNumber(6));
+  birdsQuiz.innerHTML = generateQuizOptions(quizPage);
+  generateQuizQuestion(quizPage);
+  answersClickEvent();
+
+  function answersClickEvent() {
+    let answers = document.querySelector(".answers-list");
+    answers.addEventListener('click', (e) => {
+      console.log(e.target.innerText);
+      if (e.target.innerText.trim() === _birds__WEBPACK_IMPORTED_MODULE_0__["default"][quizPage][correntAnswerNumber].name) {
+        e.target.classList.add("success");
+        // TODO: снять обработчики после удачного клика
+        // removeEventListener
+      } else {
+        e.target.classList.add("error");
+      }
+
+      birdDescr.innerHTML = generateBirdCard(quizPage, getNameReturnBird(quizPage, e.target.innerText).id - 1);
+    });
+  }
+
+  function getNameReturnBird(page, birdName) {
+    for (let i = 0; i < _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page].length; i++) {
+      if (_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][i].name === birdName.trim()) {
+        return _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][i];
+      }
+    }
+    return;
+  }
+
+  function generateQuizQuestion(page) {
+    birdsQuestion.setAttribute('src', `${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][correntAnswerNumber].audio}`);
+  }
+
+  function generateQuizOptions(page) {
+    // TODO: заменить на цикл
+    return `
+    <ul class="answers-list list-group">
+      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][0].name}</li>
+      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][1].name}</li>
+      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][2].name}</li>
+      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][3].name}</li>
+      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][4].name}</li>
+      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][5].name}</li>
+    </ul>
+    `;
+  }
 
   function generateBirdCard(page, id) {
     return `
@@ -445,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function randomNumber(max) {
-    return Math.floor(Math.random() * max) + 1;
+    return Math.floor(Math.random() * max);
   }
 
   // console.log(randomNumber(6));
