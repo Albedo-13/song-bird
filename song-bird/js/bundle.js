@@ -388,7 +388,14 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener('DOMContentLoaded', () => {
   //! TODO: после правильного ответа снимать обр. событий
   //! TODO: Блокировать кнопку Next Level до правильного ответа
+  //! TODO: Замена изображения и названия птицы в вопросе
+  // после правильного ответа
+  //! TODO: сообщение о победе
+  //! TODO: подсчет очков и отображение в финальном окне
+  //! TODO: кнопка перезапуска теста на финальном окне
+  // (только если не макс 30 баллов)
 
+  // TODO: добавить плеер в карточку
   // TODO: переработать имена, вложенности и зависимости
   // TODO: нужно сделать кастомный плеер (rss temp папка)
   // TODO: вебпак
@@ -407,6 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           return;
         }
+
         pagination.children[i].classList.remove("active");
         pagination.children[i + 1].classList.add("active");
 
@@ -415,8 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
         birdDescr.innerHTML = generateBirdCard(quizPage, randomNumber(6));
         birdsQuiz.innerHTML = generateQuizOptions(quizPage);
         generateQuizQuestion(quizPage);
-        answersClickEvent();
-        // console.log(birdsData[quizPage][2].name);
+        addAnswersClickEvent();
         return;
       }
     }
@@ -427,30 +434,37 @@ document.addEventListener('DOMContentLoaded', () => {
   let correntAnswerNumber = randomNumber(6);
   const birdDescr = document.querySelector(".bird-descr-container");
   const birdsQuiz = document.querySelector(".birds-quiz");
-  const birdsQuestion = document.querySelector(".random-bird audio");
+  const birdsQuestion = document.querySelector(".random-bird");
 
   // birdDescr.innerHTML = generateBirdCard(quizPage, randomNumber(6));
   birdsQuiz.innerHTML = generateQuizOptions(quizPage);
   generateQuizQuestion(quizPage);
-  answersClickEvent();
+  addAnswersClickEvent();
 
-  function answersClickEvent() {
+  function addAnswersClickEvent() {
     let answers = document.querySelector(".answers-list");
-    answers.addEventListener('click', (e) => {
-      console.log(e.target.innerText);
-      if (e.target.innerText.trim() === _birds__WEBPACK_IMPORTED_MODULE_0__["default"][quizPage][correntAnswerNumber].name) {
-        e.target.classList.add("success");
-        // TODO: снять обработчики после удачного клика
-        // removeEventListener
-      } else {
-        e.target.classList.add("error");
-      }
-
-      birdDescr.innerHTML = generateBirdCard(quizPage, getNameReturnBird(quizPage, e.target.innerText).id - 1);
-    });
+    answers.addEventListener('click', handleAnswersClickEvent);
   }
 
-  function getNameReturnBird(page, birdName) {
+  function removeAnswersClickEvent() {
+    let answers = document.querySelector(".answers-list");
+    answers.removeEventListener('click', handleAnswersClickEvent);
+  }
+
+  function handleAnswersClickEvent(e) {
+    console.log(e.target.innerText);
+    if (e.target.innerText.trim() === _birds__WEBPACK_IMPORTED_MODULE_0__["default"][quizPage][correntAnswerNumber].name) {
+      e.target.classList.add("success");
+      generateQuizQuestionAnswered(quizPage);
+      removeAnswersClickEvent();
+    } else {
+      e.target.classList.add("error");
+    }
+
+    birdDescr.innerHTML = generateBirdCard(quizPage, getBirdNameReturnBirdObj(quizPage, e.target.innerText).id - 1);
+  }
+
+  function getBirdNameReturnBirdObj(page, birdName) {
     for (let i = 0; i < _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page].length; i++) {
       if (_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][i].name === birdName.trim()) {
         return _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][i];
@@ -460,7 +474,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function generateQuizQuestion(page) {
-    birdsQuestion.setAttribute('src', `${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][correntAnswerNumber].audio}`);
+    birdsQuestion.querySelector("audio").setAttribute('src', `${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][correntAnswerNumber].audio}`);
+  }
+
+  function generateQuizQuestionAnswered(page) {
+    birdsQuestion.querySelector("h3").innerText = _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][correntAnswerNumber].name;
+    birdsQuestion.querySelector("img").setAttribute('src', _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][correntAnswerNumber].image);
+    // console.log(page);
+    // console.log(correntAnswerNumber);
+    // console.log(birdsData[page][correntAnswerNumber]);
   }
 
   function generateQuizOptions(page) {
