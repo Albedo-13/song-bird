@@ -386,22 +386,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  //! TODO: после правильного ответа снимать обр. событий
-  //! TODO: Блокировать кнопку Next Level до правильного ответа
-  //! TODO: Замена изображения и названия птицы в вопросе
-  // после правильного ответа
   //! TODO: сообщение о победе
   //! TODO: подсчет очков и отображение в финальном окне
   //! TODO: кнопка перезапуска теста на финальном окне
   // (только если не макс 30 баллов)
 
+  // TODO: починить пути к изображениям (open server)
+  // С пеликаном не работает изображение
   // TODO: добавить плеер в карточку
   // TODO: переработать имена, вложенности и зависимости
   // TODO: нужно сделать кастомный плеер (rss temp папка)
   // TODO: вебпак
+  // TODO: звуковое сопровождение
 
   const pagination = document.querySelector('.pagination');
   const nextLevelBtn = document.querySelector('.next-level');
+  let quizPage = 0;
+  // TODO: скрыть correntAnswerNumber
+  let correntAnswerNumber = randomNumber(6);
+  // const quizWrapper = document.querySelector(".quiz-wrapper");
+  const birdsQuestion = document.querySelector(".random-bird");
+  const birdsQuiz = document.querySelector(".birds-quiz");
+  const birdDescr = document.querySelector(".bird-descr-container");
+  const quizWin = document.querySelector(".quiz-win");
+
+  // Entrance
+  birdsQuiz.innerHTML = generateQuizOptions(quizPage);
+  generateQuizQuestion(quizPage);
+  addAnswersClickEvent();
+  disableNextLevelBtn();
 
   nextLevelBtn.addEventListener('click', () => {
     for (let i = 0; i < pagination.children.length; i++) {
@@ -411,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (i + 1 >= pagination.children.length) {
           console.log("ПОБЕДА!");
           pagination.children[i].classList.remove("active");
-
+          generateWinMessage();
           return;
         }
 
@@ -424,22 +437,20 @@ document.addEventListener('DOMContentLoaded', () => {
         birdsQuiz.innerHTML = generateQuizOptions(quizPage);
         generateQuizQuestion(quizPage);
         addAnswersClickEvent();
+
+        disableNextLevelBtn();
         return;
       }
     }
   });
 
-  let quizPage = 0;
-  // TODO: скрыть correntAnswerNumber
-  let correntAnswerNumber = randomNumber(6);
-  const birdDescr = document.querySelector(".bird-descr-container");
-  const birdsQuiz = document.querySelector(".birds-quiz");
-  const birdsQuestion = document.querySelector(".random-bird");
+  function disableNextLevelBtn() {
+    nextLevelBtn.setAttribute('disabled', '');
+  }
 
-  // birdDescr.innerHTML = generateBirdCard(quizPage, randomNumber(6));
-  birdsQuiz.innerHTML = generateQuizOptions(quizPage);
-  generateQuizQuestion(quizPage);
-  addAnswersClickEvent();
+  function enableNextLevelBtn() {
+    nextLevelBtn.removeAttribute('disabled');
+  }
 
   function addAnswersClickEvent() {
     let answers = document.querySelector(".answers-list");
@@ -457,6 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.target.classList.add("success");
       generateQuizQuestionAnswered(quizPage);
       removeAnswersClickEvent();
+      enableNextLevelBtn();
     } else {
       e.target.classList.add("error");
     }
@@ -471,6 +483,46 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     return;
+  }
+
+  function randomNumber(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  function generateWinMessage() {
+
+    nextLevelBtn.classList.add("hide");
+    birdsQuestion.classList.add("hide");
+
+    birdDescr.innerHTML = "";
+    birdsQuiz.innerHTML = "";
+
+    quizWin.innerHTML = `
+    <div class="jumbotron card game-over">
+      <h1 class="display-3 text-center">Поздравляем!</h1>
+      <p class="lead text-center">Вы прошли викторину и набрали XXX из XXX возможных баллов</p>
+      <hr class="my-4">
+      <button class="btn btn-success btn-next btn-game-over">Попробовать еще раз!</button>
+    </div>
+    `;
+
+    document.querySelector(".btn-game-over").addEventListener('click', () => {
+      quizPage = 0;
+      quizWin.innerHTML = "";
+      correntAnswerNumber = randomNumber(6);
+      birdDescr.innerHTML = generateInstruction();
+      birdsQuiz.innerHTML = generateQuizOptions(quizPage);
+      generateQuizQuestion(quizPage);
+      addAnswersClickEvent();
+
+      disableNextLevelBtn();
+
+      nextLevelBtn.classList.remove("hide");
+      birdsQuestion.classList.remove("hide");
+
+      // TODO: сброс счета до 0
+      pagination.children[0].classList.add("active");
+    });
   }
 
   function generateQuizQuestion(page) {
@@ -500,10 +552,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function generateInstruction() {
     return `
-    <p class="instruction" style="display: block;">
-      <span>Послушайте плеер.</span>
-      <span>Выберите птицу из списка</span>
-    </p>
+    <div class="bird-details card">
+      <div class="card-body" style="display: flex;">
+        <p class="instruction" style="display: block;">
+          <span>Послушайте плеер.</span>
+          <span>Выберите птицу из списка</span>
+        </p>
+      </div>
+    </div>
     `;
   }
 
@@ -526,10 +582,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
     `;
-  }
-
-  function randomNumber(max) {
-    return Math.floor(Math.random() * max);
   }
 
   // console.log(randomNumber(6));
