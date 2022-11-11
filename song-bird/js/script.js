@@ -1,19 +1,13 @@
 import birdsData from "./birds";
 
 document.addEventListener('DOMContentLoaded', () => {
-  //! TODO: кнопка перезапуска теста на финальном окне
-  // (только если не макс 30 баллов)
 
-  // TODO: починить пути к изображениям (open server)
-  // С пеликаном не работает изображение
-  // TODO: добавить плеер в карточку
-  // TODO: переработать имена, вложенности и зависимости
   // TODO: нужно сделать кастомный плеер (rss temp папка)
+  // TODO: переработать имена, вложенности и зависимости
+  // TODO: по возможности использовать id-шники
+  // TODO: скрыть correntAnswerNumber и переработать гибкие числа
+
   // TODO: вебпак
-  // TODO: звуковое сопровождение
-
-  // Информация о птице включает: аудиоплеер с записью голоса
-
 
   const pagination = document.querySelector('.pagination');
   const startBtn = document.querySelector('.start-game-btn');
@@ -23,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // TODO: скрыть correntAnswerNumber
   let correntAnswerNumber = randomNumber(6);
   let score = 0;
-  // гибкое число
+  // TODO: гибкое число
   let maxScoreOnPage = 5;
 
   const scoreSelector = document.querySelector(".score__num");
@@ -93,27 +87,45 @@ document.addEventListener('DOMContentLoaded', () => {
   function handleAnswersClickEvent(e) {
     console.log(e.target.innerText);
     if (e.target.innerText.trim() === birdsData[quizPage][correntAnswerNumber].name) {
-      e.target.classList.add("success");
+      updateScore(false, e.target, true);
+      new Audio("./assets/audio/win.mp3").play();
+      birdsQuestion.querySelector("audio").pause();
       generateQuizQuestionAnswered(quizPage);
       removeAnswersClickEvent();
       enableNextLevelBtn();
-      updateScore(true, false);
+      e.target.classList.add("success");
     } else {
+      updateScore(false, e.target, false);
+      new Audio("./assets/audio/error.mp3").play();
       e.target.classList.add("error");
-      updateScore(false, false);
     }
     handleDescriptionClickEvent(e);
   }
 
   function handleDescriptionClickEvent(e) {
     birdDescr.innerHTML = generateBirdCard(quizPage, getBirdNameReturnBirdObj(quizPage, e.target.innerText).id - 1);
+    
+    birdsQuestion.querySelector("audio").addEventListener('play', () => {
+      // console.log("question audio play");
+      birdDescr.querySelector("audio").pause();
+    });
+
+    birdDescr.querySelector("audio").addEventListener('play', () => {
+      // console.log("descr audio play");
+      birdsQuestion.querySelector("audio").pause();
+    });
   }
 
-  function updateScore(isCorrentAnswer, isRefresh) {
+
+  function updateScore(isRefresh, selector, isCorrentAnswer) {
     if (isRefresh) {
       score = 0;
       maxScoreOnPage = 5;
       scoreSelector.innerText = score;
+      return;
+    }
+
+    if (selector.classList.contains("error")) {
       return;
     }
     if (isCorrentAnswer) {
@@ -146,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     birdDescr.innerHTML = "";
     birdsQuiz.innerHTML = "";
 
-    // 30 - гибкое число
+    // TODO: 30 - гибкое число
     quizWin.innerHTML = `
     <div class="jumbotron card game-over">
       <h1 class="display-3 text-center">Поздравляем!</h1>
@@ -157,28 +169,28 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     document.querySelector(".btn-game-over").addEventListener('click', () => {
+      //? TODO: изменить последовательность методов?
       quizPage = 0;
       quizWin.innerHTML = "";
+      // TODO: передавать селекторы в качестве аргумента
       correntAnswerNumber = randomNumber(6);
       birdDescr.innerHTML = generateInstruction();
       birdsQuiz.innerHTML = generateQuizOptions(quizPage);
       generateQuizQuestion(quizPage);
       addAnswersClickEvent();
-      updateScore(false, true);
+      updateScore(true);
 
       disableNextLevelBtn();
 
       nextLevelBtn.classList.remove("hide");
       birdsQuestion.classList.remove("hide");
-
-      // TODO: сброс счета до 0
       pagination.children[0].classList.add("active");
     });
   }
 
   function generateQuizQuestion(page) {
     birdsQuestion.querySelector("h3").innerText = "******";
-    birdsQuestion.querySelector("img").setAttribute('src', '/assets/img/anon-bird.jpg');
+    birdsQuestion.querySelector("img").setAttribute('src', './assets/img/anon-bird.jpg');
     birdsQuestion.querySelector("audio").setAttribute('src', `${birdsData[page][correntAnswerNumber].audio}`);
   }
 
@@ -243,10 +255,4 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
     `;
   }
-
-  // console.log(randomNumber(6));
-  // console.log(randomNumber(6));
-  // console.log(randomNumber(6));
-  // console.log(randomNumber(6));
-
 });

@@ -50,4 +50,14 @@ body {
 
 .score__num {
   display: inline;
+}
+
+.bird-image {
+  width: 350px;
+  height: auto;
+}
+
+.bird-image-anon {
+  width: 200px;
+  height: auto;
 }/*# sourceMappingURL=style.css.map */
