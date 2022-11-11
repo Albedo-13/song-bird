@@ -1,6 +1,7 @@
 import birdsData from "./birds";
 
 document.addEventListener('DOMContentLoaded', () => {
+  //! TODO: стартовая страница
   //! TODO: сообщение о победе
   //! TODO: подсчет очков и отображение в финальном окне
   //! TODO: кнопка перезапуска теста на финальном окне
@@ -14,12 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // TODO: вебпак
   // TODO: звуковое сопровождение
 
+  
+  // Стартовая страница приложения (вёрстка адаптивная - 
+  // проверяется на ширине от 1920рх до 360рх) +20
+
+  //Информация о птице включает: аудиоплеер с записью голоса
+
+
   const pagination = document.querySelector('.pagination');
-  const nextLevelBtn = document.querySelector('.next-level');
+  const startBtn = document.querySelector('.start-game-btn');
+  const nextLevelBtn = document.querySelector('.next-level-btn');
   let quizPage = 0;
   // TODO: скрыть correntAnswerNumber
   let correntAnswerNumber = randomNumber(6);
   // const quizWrapper = document.querySelector(".quiz-wrapper");
+  const modalStart = document.querySelector(".myModal");
   const birdsQuestion = document.querySelector(".random-bird");
   const birdsQuiz = document.querySelector(".birds-quiz");
   const birdDescr = document.querySelector(".bird-descr-container");
@@ -30,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
   generateQuizQuestion(quizPage);
   addAnswersClickEvent();
   disableNextLevelBtn();
+
+  startBtn.addEventListener('click', () => {
+    modalStart.classList.add("hide");
+  });
 
   nextLevelBtn.addEventListener('click', () => {
     for (let i = 0; i < pagination.children.length; i++) {
@@ -70,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function addAnswersClickEvent() {
     let answers = document.querySelector(".answers-list");
     answers.addEventListener('click', handleAnswersClickEvent);
+    answers.addEventListener('click', handleDescriptionClickEvent);
   }
 
   function removeAnswersClickEvent() {
@@ -87,7 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       e.target.classList.add("error");
     }
+    handleDescriptionClickEvent(e);
+  }
 
+  function handleDescriptionClickEvent(e) {
     birdDescr.innerHTML = generateBirdCard(quizPage, getBirdNameReturnBirdObj(quizPage, e.target.innerText).id - 1);
   }
 
