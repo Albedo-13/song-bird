@@ -386,9 +386,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  //! TODO: стартовая страница
-  //! TODO: сообщение о победе
-  //! TODO: подсчет очков и отображение в финальном окне
   //! TODO: кнопка перезапуска теста на финальном окне
   // (только если не макс 30 баллов)
 
@@ -400,20 +397,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // TODO: вебпак
   // TODO: звуковое сопровождение
 
-  
-  // Стартовая страница приложения (вёрстка адаптивная - 
-  // проверяется на ширине от 1920рх до 360рх) +20
-
-  //Информация о птице включает: аудиоплеер с записью голоса
+  // Информация о птице включает: аудиоплеер с записью голоса
 
 
   const pagination = document.querySelector('.pagination');
   const startBtn = document.querySelector('.start-game-btn');
   const nextLevelBtn = document.querySelector('.next-level-btn');
+
   let quizPage = 0;
   // TODO: скрыть correntAnswerNumber
   let correntAnswerNumber = randomNumber(6);
-  // const quizWrapper = document.querySelector(".quiz-wrapper");
+  let score = 0;
+  // гибкое число
+  let maxScoreOnPage = 5;
+
+  const scoreSelector = document.querySelector(".score__num");
   const modalStart = document.querySelector(".myModal");
   const birdsQuestion = document.querySelector(".random-bird");
   const birdsQuiz = document.querySelector(".birds-quiz");
@@ -484,14 +482,32 @@ document.addEventListener('DOMContentLoaded', () => {
       generateQuizQuestionAnswered(quizPage);
       removeAnswersClickEvent();
       enableNextLevelBtn();
+      updateScore(true, false);
     } else {
       e.target.classList.add("error");
+      updateScore(false, false);
     }
     handleDescriptionClickEvent(e);
   }
 
   function handleDescriptionClickEvent(e) {
     birdDescr.innerHTML = generateBirdCard(quizPage, getBirdNameReturnBirdObj(quizPage, e.target.innerText).id - 1);
+  }
+
+  function updateScore(isCorrentAnswer, isRefresh) {
+    if (isRefresh) {
+      score = 0;
+      maxScoreOnPage = 5;
+      scoreSelector.innerText = score;
+      return;
+    }
+    if (isCorrentAnswer) {
+      score += maxScoreOnPage;
+      maxScoreOnPage = 5;
+      scoreSelector.innerText = score;
+      return;
+    }
+    --maxScoreOnPage;
   }
 
   function getBirdNameReturnBirdObj(page, birdName) {
@@ -515,10 +531,11 @@ document.addEventListener('DOMContentLoaded', () => {
     birdDescr.innerHTML = "";
     birdsQuiz.innerHTML = "";
 
+    // 30 - гибкое число
     quizWin.innerHTML = `
     <div class="jumbotron card game-over">
       <h1 class="display-3 text-center">Поздравляем!</h1>
-      <p class="lead text-center">Вы прошли викторину и набрали XXX из XXX возможных баллов</p>
+      <p class="lead text-center">Вы прошли викторину и набрали ${score} из 30 возможных баллов</p>
       <hr class="my-4">
       <button class="btn btn-success btn-next btn-game-over">Попробовать еще раз!</button>
     </div>
@@ -532,6 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
       birdsQuiz.innerHTML = generateQuizOptions(quizPage);
       generateQuizQuestion(quizPage);
       addAnswersClickEvent();
+      updateScore(false, true);
 
       disableNextLevelBtn();
 
@@ -595,8 +613,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </li>
       </ul>
       <span class="bird-description" style="display: flex;">
-        ${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][id].description}
+        <div class="list-group">
+          <div>
+            <audio src="${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][id].audio}"
+              controls></audio>
+          </div>
+          <div>
+            ${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][id].description}
+          </div>
+        </div>
       </span>
+
     </div>
   </div>
     `;

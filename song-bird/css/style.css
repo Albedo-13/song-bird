@@ -46,4 +46,8 @@ body {
 
 .game-start {
   margin-top: 100px;
+}
+
+.score__num {
+  display: inline;
 }/*# sourceMappingURL=style.css.map */
