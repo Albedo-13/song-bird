@@ -317,6 +317,91 @@ const birdsData = [
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (birdsData);
 
+/***/ }),
+
+/***/ "./js/modules/audio-player.js":
+/*!************************************!*\
+  !*** ./js/modules/audio-player.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function audioPlayer() {
+  console.log("AUDIO MODULE LOADED");
+
+  const audioPlayer = document.querySelector(".audio-player");
+  const playBtn = audioPlayer.querySelector(".audio-play-button");
+  const audioSrc = audioPlayer.querySelector("audio");
+  const playBtnImage = playBtn.querySelector("img");
+
+  const audioTimebar = audioPlayer.querySelector(".audio-timebar");
+  const audioInfo = audioPlayer.querySelector(".audio-time");
+
+  const audioVolume = audioPlayer.querySelector(".audio-volume");
+  const audioVolumeButton = audioPlayer.querySelector(".audio-volume-button");
+  const audioVolumeImg = audioVolumeButton.querySelector("img");
+  const audioVolumeBar = document.querySelector(".audio-volume-bar input");
+
+
+  audioSrc.addEventListener('loadeddata', () => {
+    audioInfo.querySelectorAll("span")[0].innerHTML = "0:00";
+    audioInfo.querySelectorAll("span")[1].innerHTML = convertDurationToTime(audioSrc.duration);
+  });
+
+  playBtn.addEventListener('click', () => {
+    if (audioSrc.paused) {
+      audioSrc.play();
+      playBtnImage.src = './assets/icons/pause.svg';
+    } else if (audioSrc.played) {
+      audioSrc.pause();
+      playBtnImage.src = './assets/icons/play.svg';
+    }
+  });
+
+  audioTimebar.addEventListener('input', (e) => {
+    audioSrc.pause();
+    playBtnImage.src = './assets/icons/play.svg';
+
+    audioSrc.currentTime = ((audioTimebar.value / 100) * audioSrc.duration);
+  });
+
+  audioVolumeButton.addEventListener('click', () => {
+    if (audioSrc.muted) {
+      audioVolumeImg.src = './assets/icons/volume-medium.svg';
+    } else {
+      audioVolumeImg.src = './assets/icons/volume-mute.svg';
+    }
+
+    audioSrc.muted = !audioSrc.muted;
+  });
+
+  audioVolumeBar.addEventListener('input', (e) => {
+    audioSrc.volume = parseFloat(audioVolumeBar.value / 100);
+  });
+
+  setInterval(() => {
+    audioTimebar.value = audioSrc.currentTime / audioSrc.duration * 100;
+
+    audioInfo.querySelectorAll("span")[0].innerHTML = convertDurationToTime(audioSrc.currentTime);
+  }, 500);
+
+  // 132.5 = 2:12
+  function convertDurationToTime(time) {
+    let minutes = Math.floor(time / 60);
+    let seconds = Math.floor(time % 60);
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
+    return `${minutes}:${seconds}`;
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (audioPlayer);
+
 /***/ })
 
 /******/ 	});
@@ -383,15 +468,21 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _birds__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./birds */ "./js/birds.js");
+/* harmony import */ var _modules_audio_player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/audio-player */ "./js/modules/audio-player.js");
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // TODO: нужно сделать кастомный плеер (rss temp папка)
+  // Ну че, рефакторинг?
   // TODO: переработать имена, вложенности и зависимости
   // TODO: по возможности использовать id-шники
   // TODO: скрыть correntAnswerNumber и переработать гибкие числа
+  // TODO: заменить button на btn в audio
+  // TODO: удалить айкомун из ассетов
 
+  // TODO: нужно сделать кастомный плеер (rss temp папка)
+  // TODO: дизайн
   // TODO: вебпак
 
   const pagination = document.querySelector('.pagination');
@@ -417,6 +508,8 @@ document.addEventListener('DOMContentLoaded', () => {
   generateQuizQuestion(quizPage);
   addAnswersClickEvent();
   disableNextLevelBtn();
+  
+  (0,_modules_audio_player__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
   startBtn.addEventListener('click', () => {
     modalStart.classList.add("hide");
@@ -502,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  function updateScore(isRefresh, selector, isCorrentAnswer) {
+  function updateScore(isRefresh, selector, isCorreсtAnswer) {
     if (isRefresh) {
       score = 0;
       maxScoreOnPage = 5;
@@ -513,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (selector.classList.contains("error")) {
       return;
     }
-    if (isCorrentAnswer) {
+    if (isCorreсtAnswer) {
       score += maxScoreOnPage;
       maxScoreOnPage = 5;
       scoreSelector.innerText = score;

@@ -1,12 +1,17 @@
 import birdsData from "./birds";
+import audioPlayer from "./modules/audio-player";
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // TODO: нужно сделать кастомный плеер (rss temp папка)
+  // Ну че, рефакторинг?
   // TODO: переработать имена, вложенности и зависимости
   // TODO: по возможности использовать id-шники
   // TODO: скрыть correntAnswerNumber и переработать гибкие числа
+  // TODO: заменить button на btn в audio
+  // TODO: удалить айкомун из ассетов
 
+  // TODO: нужно сделать кастомный плеер (rss temp папка)
+  // TODO: дизайн
   // TODO: вебпак
 
   const pagination = document.querySelector('.pagination');
@@ -32,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
   generateQuizQuestion(quizPage);
   addAnswersClickEvent();
   disableNextLevelBtn();
+  
+  audioPlayer();
 
   startBtn.addEventListener('click', () => {
     modalStart.classList.add("hide");
@@ -117,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  function updateScore(isRefresh, selector, isCorrentAnswer) {
+  function updateScore(isRefresh, selector, isCorreсtAnswer) {
     if (isRefresh) {
       score = 0;
       maxScoreOnPage = 5;
@@ -128,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (selector.classList.contains("error")) {
       return;
     }
-    if (isCorrentAnswer) {
+    if (isCorreсtAnswer) {
       score += maxScoreOnPage;
       maxScoreOnPage = 5;
       scoreSelector.innerText = score;
