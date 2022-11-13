@@ -1,7 +1,7 @@
-function audioPlayer() {
+function loadAudioPlayerContorls(selector) {
   console.log("AUDIO MODULE LOADED");
 
-  const audioPlayer = document.querySelector(".audio-player");
+  const audioPlayer = document.querySelector(selector);
   const playBtn = audioPlayer.querySelector(".audio-play-button");
   const audioSrc = audioPlayer.querySelector("audio");
   const playBtnImage = playBtn.querySelector("img");
@@ -69,4 +69,4 @@ function audioPlayer() {
   }
 }
 
-export default audioPlayer;
+export default loadAudioPlayerContorls;

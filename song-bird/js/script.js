@@ -1,5 +1,5 @@
 import birdsData from "./birds";
-import audioPlayer from "./modules/audio-player";
+import loadAudioPlayerControls from "./modules/audio-player";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -8,11 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // TODO: по возможности использовать id-шники
   // TODO: скрыть correntAnswerNumber и переработать гибкие числа
   // TODO: заменить button на btn в audio
-  // TODO: удалить айкомун из ассетов
+  // TODO: запуск другого аудио должен менять иконки запуска плееров
 
-  // TODO: нужно сделать кастомный плеер (rss temp папка)
-  // TODO: дизайн
-  // TODO: вебпак
+  // TODO: дизайн (общий стиль, цветокор, плееры, БЭМ, адаптив)
+  // TODO: вебпак (генерация, подсчет очков, мб окна)
 
   const pagination = document.querySelector('.pagination');
   const startBtn = document.querySelector('.start-game-btn');
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   addAnswersClickEvent();
   disableNextLevelBtn();
   
-  audioPlayer();
+  loadAudioPlayerControls("#audio-player-question");
 
   startBtn.addEventListener('click', () => {
     modalStart.classList.add("hide");
@@ -111,7 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleDescriptionClickEvent(e) {
     birdDescr.innerHTML = generateBirdCard(quizPage, getBirdNameReturnBirdObj(quizPage, e.target.innerText).id - 1);
-    
+    loadAudioPlayerControls("#audio-player-card");
+
     birdsQuestion.querySelector("audio").addEventListener('play', () => {
       // console.log("question audio play");
       birdDescr.querySelector("audio").pause();
@@ -198,7 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function generateQuizQuestion(page) {
     birdsQuestion.querySelector("h3").innerText = "******";
     birdsQuestion.querySelector("img").setAttribute('src', './assets/img/anon-bird.jpg');
-    birdsQuestion.querySelector("audio").setAttribute('src', `${birdsData[page][correntAnswerNumber].audio}`);
+    birdsQuestion.querySelector(".random-audio").innerHTML = 
+    generateAudioPlayer(birdsData[page][correntAnswerNumber].audio, "audio-player-question");
   }
 
   function generateQuizQuestionAnswered(page) {
@@ -248,9 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
       </ul>
       <span class="bird-description" style="display: flex;">
         <div class="list-group">
-          <div>
-            <audio src="${birdsData[page][id].audio}"
-              controls></audio>
+          <div class="audio-player-1">
+            ${generateAudioPlayer(birdsData[page][id].audio, "audio-player-card")}
           </div>
           <div>
             ${birdsData[page][id].description}
@@ -260,6 +260,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     </div>
   </div>
+    `;
+  }
+
+  function generateAudioPlayer(audioSource, audioPlayerId) {
+    return `
+    <div class="audio-player" id="${audioPlayerId}">
+      <audio src="${audioSource}"
+      controls></audio>
+      <div class="audio-controls">
+        <div class="audio-play-button"><img src="./assets/icons/play.svg" alt="play"></div>
+        <input type="range" class="audio-timebar" min="0" max="100" step="1" value="0">
+    
+        <div class="audio-volume">
+          <div class="audio-volume-button">
+            <img src="./assets/icons/volume-medium.svg" alt="sound">
+          </div>
+          <div class="audio-volume-bar">
+            <input type="range" min="0" max="100" step="1" value="75">
+          </div>
+        </div>
+
+        <div class="audio-time">
+          <span>0:00</span>
+          <span>0:00</span>
+        </div>
+      </div>
+    </div>
     `;
   }
 });
