@@ -30,7 +30,7 @@ body {
   position: relative;
 }
 
-.myModal {
+.quiz-start {
   position: absolute;
   width: 100%;
   height: 100%; // check to not cover footer
@@ -49,7 +49,7 @@ body {
   margin-top: 100px;
 }
 
-.score__num {
+.score-number {
   display: inline;
 }
 
@@ -72,7 +72,7 @@ body {
   display: none;
 }
 
-.audio-play-button {
+.audio-play-btn {
   display: inline-block;
   height: 25px;
   width: 25px;
@@ -142,7 +142,7 @@ body {
   }
 }
 
-.audio-volume-button {
+.audio-volume-btn {
   display: inline-block;
   width: 25px;
   height: 25px;

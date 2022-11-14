@@ -4,66 +4,66 @@ import loadAudioPlayerControls from "./modules/audio-player";
 document.addEventListener('DOMContentLoaded', () => {
 
   // Ну че, рефакторинг?
-  // TODO: переработать имена, вложенности и зависимости
   // TODO: по возможности использовать id-шники
   // TODO: скрыть correntAnswerNumber и переработать гибкие числа
-  // TODO: заменить button на btn в audio
-  // TODO: запуск другого аудио должен менять иконки запуска плееров
 
-  // TODO: дизайн (общий стиль, цветокор, плееры, БЭМ, адаптив)
+  // TODO: дизайн (общий стиль, цветокор, плееры, БЭМ, адаптив, переработать старт окно)
   // TODO: вебпак (генерация, подсчет очков, мб окна)
+  // TODO: отдельный текст для победы в 30 баллов (для всех очков)
 
   const pagination = document.querySelector('.pagination');
   const startBtn = document.querySelector('.start-game-btn');
   const nextLevelBtn = document.querySelector('.next-level-btn');
 
   let quizPage = 0;
-  // TODO: скрыть correntAnswerNumber
-  let correntAnswerNumber = randomNumber(6);
   let score = 0;
   // TODO: гибкое число
   let maxScoreOnPage = 5;
+  // TODO: скрыть correntAnswerNumber
+  let correntAnswerNumber = randomNumber(6);
 
-  const scoreSelector = document.querySelector(".score__num");
-  const modalStart = document.querySelector(".myModal");
-  const birdsQuestion = document.querySelector(".random-bird");
-  const birdsQuiz = document.querySelector(".birds-quiz");
-  const birdDescr = document.querySelector(".bird-descr-container");
+  const scoreSelector = document.querySelector(".score-number");
+  const modalStart = document.querySelector(".quiz-start");
   const quizWin = document.querySelector(".quiz-win");
+  const birdsQuestion = document.querySelector(".bird-question-container");
+  const birdsQuiz = document.querySelector(".birds-quiz-container");
+  const birdDescr = document.querySelector(".bird-descr-container");
 
   // Entrance
-  birdsQuiz.innerHTML = generateQuizOptions(quizPage);
-  generateQuizQuestion(quizPage);
-  addAnswersClickEvent();
-  disableNextLevelBtn();
+  (() => {
+    birdsQuiz.innerHTML = generateQuizOptions(quizPage);
+    changeQuizQuestion(birdsQuestion, quizPage, correntAnswerNumber);
+    addAnswersClickEvent();
+    disableNextLevelBtn();
+  })();
 
   startBtn.addEventListener('click', () => {
     modalStart.classList.add("hide");
   });
 
   nextLevelBtn.addEventListener('click', () => {
-    for (let i = 0; i < pagination.children.length; i++) {
+    for (let i = 0; i < birdsData.length; i++) {
       if (pagination.children[i].classList.contains("active")) {
-        console.log(pagination.children[i]);
 
-        if (i + 1 >= pagination.children.length) {
-          console.log("ПОБЕДА!");
+        if (i + 1 >= birdsData.length) {
           pagination.children[i].classList.remove("active");
           generateWinMessage();
           return;
         }
 
+        ++quizPage;
+        correntAnswerNumber = randomNumber(6);
+
+        changeQuizQuestion(birdsQuestion, quizPage, correntAnswerNumber);
+        birdsQuiz.innerHTML = generateQuizOptions(quizPage);
+        birdDescr.innerHTML = generateInstruction();
+
+        addAnswersClickEvent();
+        disableNextLevelBtn();
+
         pagination.children[i].classList.remove("active");
         pagination.children[i + 1].classList.add("active");
 
-        ++quizPage;
-        correntAnswerNumber = randomNumber(6);
-        birdDescr.innerHTML = generateInstruction();
-        birdsQuiz.innerHTML = generateQuizOptions(quizPage);
-        generateQuizQuestion(quizPage);
-        addAnswersClickEvent();
-
-        disableNextLevelBtn();
         return;
       }
     }
@@ -79,24 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function addAnswersClickEvent() {
     let answers = document.querySelector(".answers-list");
-    answers.addEventListener('click', handleAnswersClickEvent);
-    answers.addEventListener('click', handleDescriptionClickEvent);
+    answers.addEventListener('mousedown', handleAnswersClickEvent);
+    answers.addEventListener('mousedown', handleDescriptionClickEvent);
   }
 
   function removeAnswersClickEvent() {
     let answers = document.querySelector(".answers-list");
-    answers.removeEventListener('click', handleAnswersClickEvent);
+    answers.removeEventListener('mousedown', handleAnswersClickEvent);
   }
 
   function handleAnswersClickEvent(e) {
-    console.log(e.target.innerText);
     if (e.target.innerText.trim() === birdsData[quizPage][correntAnswerNumber].name) {
       updateScore(false, e.target, true);
       new Audio("./assets/audio/win.mp3").play();
       e.target.classList.add("success");
 
       birdsQuestion.querySelector("audio").pause();
-      generateQuizQuestionAnswered(quizPage);
+      birdsQuestion.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.svg");
+
+      changeQuizQuestionAnswered(birdsQuestion, quizPage, correntAnswerNumber);
       removeAnswersClickEvent();
       enableNextLevelBtn();
     } else {
@@ -108,17 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleDescriptionClickEvent(e) {
-    birdDescr.innerHTML = generateBirdCard(quizPage, getBirdNameReturnBirdObj(quizPage, e.target.innerText).id - 1);
+    birdDescr.innerHTML = generateBirdCard(quizPage, convertBirdNameToBirdObj(quizPage, e.target.innerText).id - 1);
     loadAudioPlayerControls("#audio-player-card");
 
     birdsQuestion.querySelector("audio").addEventListener('play', () => {
       birdDescr.querySelector("audio").pause();
-      birdDescr.querySelector(".audio-play-button img").setAttribute("src", "./assets/icons/play.svg");
+      birdDescr.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.svg");
     });
 
     birdDescr.querySelector("audio").addEventListener('play', () => {
       birdsQuestion.querySelector("audio").pause();
-      birdsQuestion.querySelector(".audio-play-button img").setAttribute("src", "./assets/icons/play.svg");
+      birdsQuestion.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.svg");
     });
   }
 
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     --maxScoreOnPage;
   }
 
-  function getBirdNameReturnBirdObj(page, birdName) {
+  function convertBirdNameToBirdObj(page, birdName) {
     for (let i = 0; i < birdsData[page].length; i++) {
       if (birdsData[page][i].name === birdName.trim()) {
         return birdsData[page][i];
@@ -157,12 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function generateWinMessage() {
-
     nextLevelBtn.classList.add("hide");
     birdsQuestion.classList.add("hide");
 
-    birdDescr.innerHTML = "";
     birdsQuiz.innerHTML = "";
+    birdDescr.innerHTML = "";
 
     // TODO: 30 - гибкое число
     quizWin.innerHTML = `
@@ -170,22 +170,22 @@ document.addEventListener('DOMContentLoaded', () => {
       <h1 class="display-3 text-center">Поздравляем!</h1>
       <p class="lead text-center">Вы прошли викторину и набрали ${score} из 30 возможных баллов</p>
       <hr class="my-4">
-      <button class="btn btn-success btn-next btn-game-over">Попробовать еще раз!</button>
+      <button class="btn btn-success btn-next game-over-btn">Попробовать еще раз!</button>
     </div>
     `;
 
-    document.querySelector(".btn-game-over").addEventListener('click', () => {
-      //? TODO: изменить последовательность методов?
+    document.querySelector(".game-over-btn").addEventListener('click', () => {
       quizPage = 0;
       quizWin.innerHTML = "";
-      // TODO: передавать селекторы в качестве аргумента
       correntAnswerNumber = randomNumber(6);
-      birdDescr.innerHTML = generateInstruction();
+
+      changeQuizQuestion(birdsQuestion, quizPage, correntAnswerNumber);
       birdsQuiz.innerHTML = generateQuizOptions(quizPage);
-      generateQuizQuestion(quizPage);
-      addAnswersClickEvent();
+      birdDescr.innerHTML = generateInstruction();
+
       updateScore(true);
 
+      addAnswersClickEvent();
       disableNextLevelBtn();
 
       nextLevelBtn.classList.remove("hide");
@@ -194,18 +194,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function generateQuizQuestion(page) {
-    birdsQuestion.querySelector("h3").innerText = "******";
-    birdsQuestion.querySelector("img").setAttribute('src', './assets/img/anon-bird.jpg');
-    birdsQuestion.querySelector(".random-audio").innerHTML = 
-    generateAudioPlayer(birdsData[page][correntAnswerNumber].audio, "audio-player-question");
+  function changeQuizQuestion(selector, page, answerNumber) {
+    selector.querySelector("h3").innerText = "******";
+    selector.querySelector("img").setAttribute('src', './assets/img/anon-bird.jpg');
+    selector.querySelector(".random-audio").innerHTML = 
+    generateAudioPlayer("audio-player-question", birdsData[page][answerNumber].audio);
     
     loadAudioPlayerControls("#audio-player-question");
   }
 
-  function generateQuizQuestionAnswered(page) {
-    birdsQuestion.querySelector("h3").innerText = birdsData[page][correntAnswerNumber].name;
-    birdsQuestion.querySelector("img").setAttribute('src', birdsData[page][correntAnswerNumber].image);
+  function changeQuizQuestionAnswered(selector, page, answerNumber) {
+    selector.querySelector("h3").innerText = birdsData[page][answerNumber].name;
+    selector.querySelector("img").setAttribute('src', birdsData[page][answerNumber].image);
   }
 
   function generateQuizOptions(page) {
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <span class="bird-description" style="display: flex;">
         <div class="list-group">
           <div class="audio-player-1">
-            ${generateAudioPlayer(birdsData[page][id].audio, "audio-player-card")}
+            ${generateAudioPlayer("audio-player-card", birdsData[page][id].audio)}
           </div>
           <div>
             ${birdsData[page][id].description}
@@ -266,17 +266,17 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  function generateAudioPlayer(audioSource, audioPlayerId) {
+  function generateAudioPlayer(audioPlayerId, audioSource) {
     return `
     <div class="audio-player" id="${audioPlayerId}">
       <audio src="${audioSource}"
       controls></audio>
       <div class="audio-controls">
-        <div class="audio-play-button"><img src="./assets/icons/play.svg" alt="play"></div>
+        <div class="audio-play-btn"><img src="./assets/icons/play.svg" alt="play"></div>
         <input type="range" class="audio-timebar" min="0" max="100" step="1" value="0">
     
         <div class="audio-volume">
-          <div class="audio-volume-button">
+          <div class="audio-volume-btn">
             <img src="./assets/icons/volume-medium.svg" alt="sound">
           </div>
           <div class="audio-volume-bar">

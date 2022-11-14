@@ -1,17 +1,15 @@
 function loadAudioPlayerControls(selector) {
-  console.log("AUDIO MODULE LOADED");
-
   const audioPlayer = document.querySelector(selector);
-  const playBtn = audioPlayer.querySelector(".audio-play-button");
   const audioSrc = audioPlayer.querySelector("audio");
+
+  const playBtn = audioPlayer.querySelector(".audio-play-btn");
   const playBtnImage = playBtn.querySelector("img");
 
   const audioTimebar = audioPlayer.querySelector(".audio-timebar");
   const audioInfo = audioPlayer.querySelector(".audio-time");
 
-  const audioVolume = audioPlayer.querySelector(".audio-volume");
-  const audioVolumeButton = audioPlayer.querySelector(".audio-volume-button");
-  const audioVolumeImg = audioVolumeButton.querySelector("img");
+  const audioVolumeBtn = audioPlayer.querySelector(".audio-volume-btn");
+  const audioVolumeImg = audioVolumeBtn.querySelector("img");
   const audioVolumeBar = document.querySelector(".audio-volume-bar input");
 
 
@@ -30,14 +28,14 @@ function loadAudioPlayerControls(selector) {
     }
   });
 
-  audioTimebar.addEventListener('input', (e) => {
+  audioTimebar.addEventListener('input', () => {
     audioSrc.pause();
     playBtnImage.src = './assets/icons/play.svg';
 
     audioSrc.currentTime = ((audioTimebar.value / 100) * audioSrc.duration);
   });
 
-  audioVolumeButton.addEventListener('click', () => {
+  audioVolumeBtn.addEventListener('click', () => {
     if (audioSrc.muted) {
       audioVolumeImg.src = './assets/icons/volume-medium.svg';
     } else {
@@ -47,7 +45,7 @@ function loadAudioPlayerControls(selector) {
     audioSrc.muted = !audioSrc.muted;
   });
 
-  audioVolumeBar.addEventListener('input', (e) => {
+  audioVolumeBar.addEventListener('input', () => {
     audioSrc.volume = parseFloat(audioVolumeBar.value / 100);
   });
 
