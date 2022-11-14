@@ -12,7 +12,6 @@ function loadAudioPlayerControls(selector) {
   const audioVolumeImg = audioVolumeBtn.querySelector("img");
   const audioVolumeBar = document.querySelector(".audio-volume-bar input");
 
-
   audioSrc.addEventListener('loadeddata', () => {
     audioInfo.querySelectorAll("span")[0].innerHTML = "0:00";
     audioInfo.querySelectorAll("span")[1].innerHTML = convertDurationToTime(audioSrc.duration);

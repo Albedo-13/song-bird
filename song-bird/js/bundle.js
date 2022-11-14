@@ -343,7 +343,6 @@ function loadAudioPlayerControls(selector) {
   const audioVolumeImg = audioVolumeBtn.querySelector("img");
   const audioVolumeBar = document.querySelector(".audio-volume-bar input");
 
-
   audioSrc.addEventListener('loadeddata', () => {
     audioInfo.querySelectorAll("span")[0].innerHTML = "0:00";
     audioInfo.querySelectorAll("span")[1].innerHTML = convertDurationToTime(audioSrc.duration);
@@ -487,9 +486,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let quizPage = 0;
   let score = 0;
   // TODO: гибкое число
-  let maxScoreOnPage = 5;
+  let maxScoreOnPage = _birds__WEBPACK_IMPORTED_MODULE_0__["default"][0].length - 1;
   // TODO: скрыть correntAnswerNumber
-  let correntAnswerNumber = randomNumber(6);
+  let correntAnswerNumber = randomNumber(_birds__WEBPACK_IMPORTED_MODULE_0__["default"][0].length);
 
   const scoreSelector = document.querySelector(".score-number");
   const modalStart = document.querySelector(".quiz-start");
@@ -521,7 +520,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         ++quizPage;
-        correntAnswerNumber = randomNumber(6);
+        correntAnswerNumber = randomNumber(_birds__WEBPACK_IMPORTED_MODULE_0__["default"][quizPage].length);
+        maxScoreOnPage = _birds__WEBPACK_IMPORTED_MODULE_0__["default"][quizPage].length - 1;
 
         changeQuizQuestion(birdsQuestion, quizPage, correntAnswerNumber);
         birdsQuiz.innerHTML = generateQuizOptions(quizPage);
@@ -596,7 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateScore(isRefresh, selector, isCorreсtAnswer) {
     if (isRefresh) {
       score = 0;
-      maxScoreOnPage = 5;
+      maxScoreOnPage = _birds__WEBPACK_IMPORTED_MODULE_0__["default"][0].length - 1;
       scoreSelector.innerText = score;
       return;
     }
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (isCorreсtAnswer) {
       score += maxScoreOnPage;
-      maxScoreOnPage = 5;
+      maxScoreOnPage = _birds__WEBPACK_IMPORTED_MODULE_0__["default"][quizPage].length - 1;
       scoreSelector.innerText = score;
       return;
     }
@@ -637,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
     quizWin.innerHTML = `
     <div class="jumbotron card game-over">
       <h1 class="display-3 text-center">Поздравляем!</h1>
-      <p class="lead text-center">Вы прошли викторину и набрали ${score} из 30 возможных баллов</p>
+      <p class="lead text-center">Вы прошли викторину и набрали ${score} из ${calculateMaxScore()} возможных баллов</p>
       <hr class="my-4">
       <button class="btn btn-success btn-next game-over-btn">Попробовать еще раз!</button>
     </div>
@@ -646,7 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(".game-over-btn").addEventListener('click', () => {
       quizPage = 0;
       quizWin.innerHTML = "";
-      correntAnswerNumber = randomNumber(6);
+      correntAnswerNumber = randomNumber(_birds__WEBPACK_IMPORTED_MODULE_0__["default"][0].length);
 
       changeQuizQuestion(birdsQuestion, quizPage, correntAnswerNumber);
       birdsQuiz.innerHTML = generateQuizOptions(quizPage);
@@ -663,12 +663,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function calculateMaxScore() {
+    let result = 0;
+    for (let i = 0; i < _birds__WEBPACK_IMPORTED_MODULE_0__["default"].length; i++) {
+      for (let j = 0; j < _birds__WEBPACK_IMPORTED_MODULE_0__["default"][i].length - 1; j++) {
+        ++result;
+      }
+    }
+    return result;
+  }
+
   function changeQuizQuestion(selector, page, answerNumber) {
     selector.querySelector("h3").innerText = "******";
     selector.querySelector("img").setAttribute('src', './assets/img/anon-bird.jpg');
-    selector.querySelector(".random-audio").innerHTML = 
-    generateAudioPlayer("audio-player-question", _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][answerNumber].audio);
-    
+    selector.querySelector(".random-audio").innerHTML =
+      generateAudioPlayer("audio-player-question", _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][answerNumber].audio);
+
     (0,_modules_audio_player__WEBPACK_IMPORTED_MODULE_1__["default"])("#audio-player-question");
   }
 
@@ -678,17 +688,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function generateQuizOptions(page) {
-    // TODO: заменить на цикл
-    return `
-    <ul class="answers-list list-group">
-      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][0].name}</li>
-      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][1].name}</li>
-      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][2].name}</li>
-      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][3].name}</li>
-      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][4].name}</li>
-      <li class="list-group-item"><span class="li-btn"></span>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][5].name}</li>
-    </ul>
+    let answersList = `
+      <ul class="answers-list list-group">
     `;
+    _birds__WEBPACK_IMPORTED_MODULE_0__["default"][page].forEach((bird) => {
+      answersList += `<li class="list-group-item"><span class="li-btn"></span>${bird.name}</li>`;
+    });
+
+    return answersList += `
+      </ul>
+    `;
+
+    // return `
+    // <ul class="answers-list list-group">
+    //   <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][0].name}</li>
+    //   <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][1].name}</li>
+    //   <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][2].name}</li>
+    //   <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][3].name}</li>
+    //   <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][4].name}</li>
+    //   <li class="list-group-item"><span class="li-btn"></span>${birdsData[page][5].name}</li>
+    // </ul>
+    // `;
   }
 
   function generateInstruction() {
