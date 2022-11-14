@@ -329,7 +329,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function loadAudioPlayerContorls(selector) {
+function loadAudioPlayerControls(selector) {
   console.log("AUDIO MODULE LOADED");
 
   const audioPlayer = document.querySelector(selector);
@@ -400,7 +400,7 @@ function loadAudioPlayerContorls(selector) {
   }
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loadAudioPlayerContorls);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loadAudioPlayerControls);
 
 /***/ })
 
@@ -507,8 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
   generateQuizQuestion(quizPage);
   addAnswersClickEvent();
   disableNextLevelBtn();
-  
-  (0,_modules_audio_player__WEBPACK_IMPORTED_MODULE_1__["default"])("#audio-player-question");
 
   startBtn.addEventListener('click', () => {
     modalStart.classList.add("hide");
@@ -566,11 +564,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.innerText.trim() === _birds__WEBPACK_IMPORTED_MODULE_0__["default"][quizPage][correntAnswerNumber].name) {
       updateScore(false, e.target, true);
       new Audio("./assets/audio/win.mp3").play();
+      e.target.classList.add("success");
+
       birdsQuestion.querySelector("audio").pause();
       generateQuizQuestionAnswered(quizPage);
       removeAnswersClickEvent();
       enableNextLevelBtn();
-      e.target.classList.add("success");
     } else {
       updateScore(false, e.target, false);
       new Audio("./assets/audio/error.mp3").play();
@@ -584,13 +583,13 @@ document.addEventListener('DOMContentLoaded', () => {
     (0,_modules_audio_player__WEBPACK_IMPORTED_MODULE_1__["default"])("#audio-player-card");
 
     birdsQuestion.querySelector("audio").addEventListener('play', () => {
-      // console.log("question audio play");
       birdDescr.querySelector("audio").pause();
+      birdDescr.querySelector(".audio-play-button img").setAttribute("src", "./assets/icons/play.svg");
     });
 
     birdDescr.querySelector("audio").addEventListener('play', () => {
-      // console.log("descr audio play");
       birdsQuestion.querySelector("audio").pause();
+      birdsQuestion.querySelector(".audio-play-button img").setAttribute("src", "./assets/icons/play.svg");
     });
   }
 
@@ -671,6 +670,8 @@ document.addEventListener('DOMContentLoaded', () => {
     birdsQuestion.querySelector("img").setAttribute('src', './assets/img/anon-bird.jpg');
     birdsQuestion.querySelector(".random-audio").innerHTML = 
     generateAudioPlayer(_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][correntAnswerNumber].audio, "audio-player-question");
+    
+    (0,_modules_audio_player__WEBPACK_IMPORTED_MODULE_1__["default"])("#audio-player-question");
   }
 
   function generateQuizQuestionAnswered(page) {
@@ -710,6 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="bird-details card">
     <div class="card-body" style="display: flex;">
       <img class="bird-image" src="${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][id].image}" alt="${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][id].name}">
+      
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <h4>${_birds__WEBPACK_IMPORTED_MODULE_0__["default"][page][id].name}</h4>
@@ -718,6 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <li class="list-group-item">
         </li>
       </ul>
+
       <span class="bird-description" style="display: flex;">
         <div class="list-group">
           <div class="audio-player-1">

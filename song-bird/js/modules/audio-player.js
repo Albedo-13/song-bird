@@ -1,4 +1,4 @@
-function loadAudioPlayerContorls(selector) {
+function loadAudioPlayerControls(selector) {
   console.log("AUDIO MODULE LOADED");
 
   const audioPlayer = document.querySelector(selector);
@@ -69,4 +69,4 @@ function loadAudioPlayerContorls(selector) {
   }
 }
 
-export default loadAudioPlayerContorls;
+export default loadAudioPlayerControls;
