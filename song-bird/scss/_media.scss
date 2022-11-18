@@ -1,5 +1,10 @@
-@media (max-width: 1599px) {
+@media (max-width: 1100px) {
   .container {
       padding: 0 30px;
+  }
+
+  .footer {
+    width: calc(100% - 60px);
+    max-width: calc(100% - 60px);
   }
 }

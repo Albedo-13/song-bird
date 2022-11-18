@@ -1,5 +1,5 @@
 .quiz-wrapper {
-  position: relative;
+  position: relative; // -
 }
 
 .answers-list {
@@ -7,8 +7,11 @@
 
   .answers-list-item {
     padding: 10px 25px;
-    border-bottom: 1px solid white;
     list-style-type: none;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid white;
+    }
 
     &::before {
       content: '';

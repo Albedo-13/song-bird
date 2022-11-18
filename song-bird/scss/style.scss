@@ -17,6 +17,7 @@ body {
   margin: 0 auto;
   max-width: 1100px;
   padding: 0;
+  position: relative; // -
 }
 
 .hide {
@@ -34,6 +35,14 @@ body {
   background-color: $color-gray;
 }
 
+ul {
+  margin: 0;
+}
+
+.mb-100px {
+  margin-bottom: 100px;
+}
+
 
 @import './blocks/audio.scss';
 @import './blocks/_header.scss';
@@ -43,9 +52,6 @@ body {
 @import './blocks/_footer.scss';
 
 @import './_media.scss';
-
-
-
 
 
 .quiz-start {

@@ -12,6 +12,7 @@ body {
   margin: 0 auto;
   max-width: 1100px;
   padding: 0;
+  position: relative;
 }
 
 .hide {
@@ -26,6 +27,14 @@ body {
 
 .list-group {
   background-color: #222;
+}
+
+ul {
+  margin: 0;
+}
+
+.mb-100px {
+  margin-bottom: 100px;
 }
 
 .pagination {
@@ -51,8 +60,10 @@ body {
 }
 .answers-list .answers-list-item {
   padding: 10px 25px;
-  border-bottom: 1px solid white;
   list-style-type: none;
+}
+.answers-list .answers-list-item:not(:last-child) {
+  border-bottom: 1px solid white;
 }
 .answers-list .answers-list-item::before {
   content: "";
@@ -74,9 +85,35 @@ body {
   background-color: green;
 }
 
-@media (max-width: 1599px) {
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: inherit;
+  max-width: inherit;
+  padding: 6px 25px;
+}
+.footer-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.footer-developer p {
+  margin: 0;
+}
+.footer-dev-year p {
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
   .container {
     padding: 0 30px;
+  }
+  .footer {
+    width: calc(100% - 60px);
+    max-width: calc(100% - 60px);
   }
 }
 .quiz-start {

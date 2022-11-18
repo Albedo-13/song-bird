@@ -1,0 +1,24 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width:inherit;
+  max-width:inherit;
+  padding: 6px 25px;
+
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-developer {
+    p {
+      margin: 0;
+    }
+  }
+  
+  &-dev-year {
+    p {
+      margin: 0;
+    }
+  }
+}
