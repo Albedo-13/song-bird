@@ -15,26 +15,28 @@
 <body>
   <div class="container">
 
-    <ul class="pagination">
-      <li class="page-item active" href="#">
-        <a class="page-link" href="./#">Разминка</a>
-      </li>
-      <li class="page-item" href="#">
-        <a class="page-link" href="./#">Воробьиные</a>
-      </li>
-      <li class="page-item" href="#">
-        <a class="page-link" href="./#">Лесные птицы</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="./#">Певчие птицы</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="./#">Хищные птицы</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="./#">Морские птицы</a>
-      </li>
-    </ul>
+    <header>
+      <ul class="pagination">
+        <li class="page-item active" href="#">
+          <a class="page-link" href="./#">Разминка</a>
+        </li>
+        <li class="page-item" href="#">
+          <a class="page-link" href="./#">Воробьиные</a>
+        </li>
+        <li class="page-item" href="#">
+          <a class="page-link" href="./#">Лесные птицы</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="./#">Певчие птицы</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="./#">Хищные птицы</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="./#">Морские птицы</a>
+        </li>
+      </ul>
+    </header>
 
     <div class="header">
       <div class="score">
@@ -45,36 +47,44 @@
 
     <div class="quiz-wrapper">
 
-      <button class="btn btn-success next-level-btn">Next Level</button>
-
-      <div class="bird-question-container">
-        <div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <h3>******</h3>
-              <img class="bird-image-anon" src="/assets/img/anon-bird.jpg" alt="bird">
+      <div class="bird-question-container card">
+        <button class="btn btn-success next-level-btn">Next Level</button>
+        <div class="">
+          <ul class="list-group-flush bird-question-wrapper">
+            <li class="list-group-item bird-question-image">
+              <div class="bird-image-anon">
+                <img src="/assets/img/anon-bird.jpg" alt="bird">
+              </div>
             </li>
-            <li class="list-group-item random-audio">
-              <!-- Generate audio player -->
+            <li class="list-group-item bird-question-audio">
+              <h3>******</h3>
+              <div class="random-audio">
+                <!-- Generate audio player -->
+              </div>
             </li>
           </ul>
         </div>
       </div>
 
-      <div class="birds-quiz-container">
-        <!-- Generate quiz -->
-      </div>
 
-      <div class="bird-descr-container">
-        <!-- Generate bird description & audio player -->
-        <div class="bird-details card">
-          <div class="card-body" style="display: flex;">
-            <p class="instruction" style="display: block;">
-              <span>Послушайте плеер.</span>
-              <span>Выберите птицу из списка</span>
-            </p>
+
+      <div class="row row-cols-2">
+        <div class="birds-quiz-container col-md-6">
+          <!-- Generate quiz -->
+        </div>
+
+        <div class="bird-descr-container col-md-6">
+          <!-- Generate bird description & audio player -->
+          <div class="bird-details card">
+            <div class="card-body" style="display: flex;">
+              <p class="instruction" style="display: block;">
+                <span>Послушайте плеер.</span>
+                <span>Выберите птицу из списка</span>
+              </p>
+            </div>
           </div>
         </div>
+
       </div>
 
       <div class="quiz-start hide">

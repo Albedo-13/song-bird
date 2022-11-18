@@ -221,10 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function generateQuizOptions(page) {
     let answersList = `
-      <ul class="answers-list list-group">
+      <ul class="answers-list card">
     `;
     birdsData[page].forEach((bird) => {
-      answersList += `<li class="list-group-item"><span class="li-btn"></span>${bird.name}</li>`;
+      answersList += `<li class="answers-list-item"><span class="li-btn"></span>${bird.name}</li>`;
     });
 
     return answersList += `
@@ -259,31 +259,37 @@ document.addEventListener('DOMContentLoaded', () => {
   function generateBirdCard(page, id) {
     return `
     <div class="bird-details card">
-    <div class="card-body" style="display: flex;">
-      <img class="bird-image" src="${birdsData[page][id].image}" alt="${birdsData[page][id].name}">
-      
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <h4>${birdsData[page][id].name}</h4>
-        </li>
-        <li class="list-group-item"><span>${birdsData[page][id].species}</span></li>
-        <li class="list-group-item">
-        </li>
-      </ul>
+      <div class="card-body">
 
-      <span class="bird-description" style="display: flex;">
-        <div class="list-group">
-          <div class="audio-player-1">
-            ${generateAudioPlayer("audio-player-card", birdsData[page][id].audio)}
+        <div class="bird-details-wrapper">
+          <div class="bird-image">
+            <img src="${birdsData[page][id].image}" alt="${birdsData[page][id].name}">
           </div>
-          <div>
-            ${birdsData[page][id].description}
-          </div>
+          
+          <ul class="bird-details-mod">
+            <li class="list-group-item">
+              <h4>${birdsData[page][id].name}</h4>
+            </li>
+            <li class="list-group-item"><span>${birdsData[page][id].species}</span></li>
+            <li class="list-group-item">
+              <div class="audio-player-1">
+                ${generateAudioPlayer("audio-player-card", birdsData[page][id].audio)}
+              </div>
+            </li>
+          </ul>
+          
         </div>
-      </span>
 
+        <span class="bird-description">
+          <div class="list-group">
+            <div>
+              ${birdsData[page][id].description}
+            </div>
+          </div>
+        </span>
+
+      </div>
     </div>
-  </div>
     `;
   }
 
@@ -293,17 +299,20 @@ document.addEventListener('DOMContentLoaded', () => {
       <audio src="${audioSource}"
       controls></audio>
       <div class="audio-controls">
-        <div class="audio-play-btn"><img src="./assets/icons/play.svg" alt="play"></div>
-        <input type="range" class="audio-timebar" min="0" max="100" step="1" value="0">
-    
-        <div class="audio-volume">
-          <div class="audio-volume-btn">
-            <img src="./assets/icons/volume-medium.svg" alt="sound">
-          </div>
-          <div class="audio-volume-bar">
-            <input type="range" min="0" max="100" step="1" value="75">
+        <div class="audio-controls-top">
+          <div class="audio-play-btn"><img src="./assets/icons/play.svg" alt="play"></div>
+          <input type="range" class="audio-timebar" min="0" max="100" step="1" value="0">
+      
+          <div class="audio-volume">
+            <div class="audio-volume-btn">
+              <img src="./assets/icons/volume-medium.svg" alt="sound">
+            </div>
+            <div class="audio-volume-bar">
+              <input type="range" min="0" max="100" step="1" value="75">
+            </div>
           </div>
         </div>
+
 
         <div class="audio-time">
           <span>0:00</span>

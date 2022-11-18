@@ -1,0 +1,47 @@
+.quiz-wrapper {
+  position: relative;
+}
+
+.answers-list {
+  padding: 0;
+
+  .answers-list-item {
+    padding: 10px 25px;
+    border-bottom: 1px solid white;
+    list-style-type: none;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      position: relative;
+      background-color: #fff;
+      width: 7px;
+      height: 7px;
+      border-radius: 100%;
+      left: -10px;
+      top: -3px;
+    }
+  }
+
+  .error {
+    // background-color: red;
+  
+    &::before {
+      content: '';
+      background-color: red;
+    }
+  }
+
+  .success {
+    // background-color: green;
+  
+    &::before {
+      content: '';
+      background-color: green;
+    }
+  }
+  
+}
+
+
+

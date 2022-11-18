@@ -1,0 +1,24 @@
+.pagination {
+  flex-wrap: wrap;
+  // justify-content: center;
+  // display: inline-block;
+
+  .page-item {
+    // display: inline-block;
+
+    .page-link {
+      color: white;
+      background-color: gray;
+    }
+  }
+
+  .active {
+    .page-link {
+
+      color: white;
+      background-color: pink;
+
+      border-color: red;
+    }
+  }
+}
