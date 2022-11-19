@@ -1,8 +1,8 @@
 .footer {
   position: fixed;
   bottom: 0;
-  width:inherit;
-  max-width:inherit;
+  width: inherit;
+  max-width: inherit;
   padding: 6px 25px;
 
   &-wrapper {
@@ -10,15 +10,35 @@
     justify-content: space-between;
   }
 
-  &-developer {
-    p {
-      margin: 0;
+  &-developer,
+  &-course {
+    height: 45px;
+    max-width: auto;
+    opacity: .75;
+    transition: 0.25s all;
+
+    &:hover {
+      opacity: 1;
+      transition: 0.25s all;
+    }
+
+    img {
+      max-height: 43px;
+      max-width: auto;
+    }
+
+    span {
+      padding: 10px 7px 13px;
+      font-size: 18px;
     }
   }
-  
-  &-dev-year {
-    p {
-      margin: 0;
+
+  &-link {
+    text-decoration: none;
+    color: #fff;
+
+    &:hover {
+      color: #fff;
     }
   }
 }

@@ -7,11 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // TODO: по возможности использовать id-шники
   // TODO: скрыть correntAnswerNumber и переработать гибкие числа
 
+  // TODO: Семантические теги
+  // TODO: В description и question scss переработать вложенности
+  // TODO: blue -> cornflower
+  // TODO: почистить мертвые стили // - и // ?
+  // TODO: В описании птицы изменить стили
   // TODO: дизайн (общий стиль, цветокор, плееры, БЭМ, адаптив, переработать старт окно)
   // TODO: вебпак (генерация, подсчет очков, мб окна)
   // TODO: отдельный текст для победы в 30 баллов (для всех очков)
 
-  const pagination = document.querySelector('.pagination');
+  const pagination = document.querySelector('.header-pagination');
   const startBtn = document.querySelector('.start-game-btn');
   const nextLevelBtn = document.querySelector('.next-level-btn');
 
@@ -28,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const birdsQuestion = document.querySelector(".bird-question-container");
   const birdsQuiz = document.querySelector(".birds-quiz-container");
   const birdDescr = document.querySelector(".bird-descr-container");
+  const headerLogo = document.querySelector(".header-logo");
 
   // Entrance
   (() => {
@@ -39,6 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startBtn.addEventListener('click', () => {
     modalStart.classList.add("hide");
+  });
+
+  headerLogo.addEventListener('click', () => {
+    handleResetGameBtn();
   });
 
   nextLevelBtn.addEventListener('click', () => {
@@ -96,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.target.classList.add("success");
 
       birdsQuestion.querySelector("audio").pause();
-      birdsQuestion.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.svg");
+      birdsQuestion.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.png");
 
       changeQuizQuestionAnswered(birdsQuestion, quizPage, correntAnswerNumber);
       removeAnswersClickEvent();
@@ -115,15 +125,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     birdsQuestion.querySelector("audio").addEventListener('play', () => {
       birdDescr.querySelector("audio").pause();
-      birdDescr.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.svg");
+      birdDescr.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.png");
     });
 
     birdDescr.querySelector("audio").addEventListener('play', () => {
       birdsQuestion.querySelector("audio").pause();
-      birdsQuestion.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.svg");
+      birdsQuestion.querySelector(".audio-play-btn img").setAttribute("src", "./assets/icons/play.png");
     });
   }
 
+  function handleResetGameBtn() {
+    for (let i = 0; i < birdsData.length; i++) {
+      if (pagination.children[i].classList.contains("active")) {
+        pagination.children[i].classList.remove("active");
+      }
+    }
+
+    quizPage = 0;
+    quizWin.innerHTML = "";
+    correntAnswerNumber = randomNumber(birdsData[0].length);
+
+    changeQuizQuestion(birdsQuestion, quizPage, correntAnswerNumber);
+    birdsQuiz.innerHTML = generateQuizOptions(quizPage);
+    birdDescr.innerHTML = generateInstruction();
+
+    updateScore(true);
+
+    addAnswersClickEvent();
+    disableNextLevelBtn();
+
+    nextLevelBtn.classList.remove("hide");
+    birdsQuestion.classList.remove("hide");
+    pagination.children[0].classList.add("active");
+  }
 
   function updateScore(isRefresh, selector, isCorreсtAnswer) {
     if (isRefresh) {
@@ -176,22 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     document.querySelector(".game-over-btn").addEventListener('click', () => {
-      quizPage = 0;
-      quizWin.innerHTML = "";
-      correntAnswerNumber = randomNumber(birdsData[0].length);
-
-      changeQuizQuestion(birdsQuestion, quizPage, correntAnswerNumber);
-      birdsQuiz.innerHTML = generateQuizOptions(quizPage);
-      birdDescr.innerHTML = generateInstruction();
-
-      updateScore(true);
-
-      addAnswersClickEvent();
-      disableNextLevelBtn();
-
-      nextLevelBtn.classList.remove("hide");
-      birdsQuestion.classList.remove("hide");
-      pagination.children[0].classList.add("active");
+      handleResetGameBtn();
     });
   }
 
@@ -281,11 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <span class="bird-description">
-          <div class="list-group">
-            <div>
-              ${birdsData[page][id].description}
-            </div>
-          </div>
+          <p>
+            ${birdsData[page][id].description}
+          </p>
         </span>
 
       </div>
@@ -300,15 +317,14 @@ document.addEventListener('DOMContentLoaded', () => {
       controls></audio>
       <div class="audio-controls">
         <div class="audio-controls-top">
-          <div class="audio-play-btn"><img src="./assets/icons/play.svg" alt="play"></div>
+          <div class="audio-play-btn"><img src="./assets/icons/play.png" alt="play"></div>
           <input type="range" class="audio-timebar" min="0" max="100" step="1" value="0">
-      
           <div class="audio-volume">
             <div class="audio-volume-btn">
-              <img src="./assets/icons/volume-medium.svg" alt="sound">
+              <img src="./assets/icons/volume-medium.png" alt="sound">
             </div>
-            <div class="audio-volume-bar">
-              <input type="range" min="0" max="100" step="1" value="75">
+            <div class="audio-volume-bar-container">
+              <input class="audio-volume-bar" type="range" min="0" max="100" step="1" value="75">
             </div>
           </div>
         </div>

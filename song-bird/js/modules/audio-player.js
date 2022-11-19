@@ -10,7 +10,7 @@ function loadAudioPlayerControls(selector) {
 
   const audioVolumeBtn = audioPlayer.querySelector(".audio-volume-btn");
   const audioVolumeImg = audioVolumeBtn.querySelector("img");
-  const audioVolumeBar = document.querySelector(".audio-volume-bar input");
+  const audioVolumeBar = document.querySelector(".audio-volume-bar");
 
   audioSrc.addEventListener('loadeddata', () => {
     audioInfo.querySelectorAll("span")[0].innerHTML = "0:00";
@@ -20,25 +20,25 @@ function loadAudioPlayerControls(selector) {
   playBtn.addEventListener('click', () => {
     if (audioSrc.paused) {
       audioSrc.play();
-      playBtnImage.src = './assets/icons/pause.svg';
+      playBtnImage.src = './assets/icons/pause.png';
     } else if (audioSrc.played) {
       audioSrc.pause();
-      playBtnImage.src = './assets/icons/play.svg';
+      playBtnImage.src = './assets/icons/play.png';
     }
   });
 
   audioTimebar.addEventListener('input', () => {
     audioSrc.pause();
-    playBtnImage.src = './assets/icons/play.svg';
+    playBtnImage.src = './assets/icons/play.png';
 
     audioSrc.currentTime = ((audioTimebar.value / 100) * audioSrc.duration);
   });
 
   audioVolumeBtn.addEventListener('click', () => {
     if (audioSrc.muted) {
-      audioVolumeImg.src = './assets/icons/volume-medium.svg';
+      audioVolumeImg.src = './assets/icons/volume-medium.png';
     } else {
-      audioVolumeImg.src = './assets/icons/volume-mute.svg';
+      audioVolumeImg.src = './assets/icons/volume-mute.png';
     }
 
     audioSrc.muted = !audioSrc.muted;

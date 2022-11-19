@@ -1,0 +1,38 @@
+.start-game-btn,
+.next-level-btn {
+  width: 100%;
+  background-color: $color-blue;
+  padding: 7px 0;
+  color: white;
+
+  border: none;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+
+  &:disabled {
+    opacity: .5;
+  }
+}
+
+.bird-image-anon {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 5%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+.bird-question-wrapper {
+  display: flex;
+  padding: 10px 25px;
+}
+
+.bird-question-image {
+  // width: 150px;
+  margin-right: 20px;
+}

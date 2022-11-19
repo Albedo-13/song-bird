@@ -2,6 +2,10 @@
   position: relative; // -
 }
 
+.birds-quiz-container {
+  padding: 13px;
+}
+
 .answers-list {
   padding: 0;
 
@@ -10,7 +14,7 @@
     list-style-type: none;
 
     &:not(:last-child) {
-      border-bottom: 1px solid white;
+      border-bottom: 1px solid $color-gray;
     }
 
     &::before {
@@ -31,7 +35,7 @@
   
     &::before {
       content: '';
-      background-color: red;
+      background-color: #b90e0a; // -
     }
   }
 
@@ -40,7 +44,7 @@
   
     &::before {
       content: '';
-      background-color: green;
+      background-color: $color-dark-blue;
     }
   }
   

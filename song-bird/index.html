@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SongBird</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
 
@@ -16,39 +17,42 @@
   <div class="container">
 
     <header>
-      <ul class="pagination">
-        <li class="page-item active" href="#">
-          <a class="page-link" href="./#">Разминка</a>
+      <div class="header-wrapper">
+        <a class="header-logo" href="./#">
+          <img src="./assets/icons/logo.webp" alt="site logo">
+          <span>SongBird</span>
+        </a>
+        <div class="score">
+          Score:
+          <div class="score-number">0</div>
+        </div>
+      </div>
+      <ul class="header-pagination">
+        <li class="header-page-item active" href="#">
+          <a class="header-page-link" href="./#">Разминка</a>
         </li>
-        <li class="page-item" href="#">
-          <a class="page-link" href="./#">Воробьиные</a>
+        <li class="header-page-item" href="#">
+          <a class="header-page-link" href="./#">Воробьиные</a>
         </li>
-        <li class="page-item" href="#">
-          <a class="page-link" href="./#">Лесные птицы</a>
+        <li class="header-page-item" href="#">
+          <a class="header-page-link" href="./#">Лесные птицы</a>
         </li>
-        <li class="page-item">
-          <a class="page-link" href="./#">Певчие птицы</a>
+        <li class="header-page-item">
+          <a class="header-page-link" href="./#">Певчие птицы</a>
         </li>
-        <li class="page-item">
-          <a class="page-link" href="./#">Хищные птицы</a>
+        <li class="header-page-item">
+          <a class="header-page-link" href="./#">Хищные птицы</a>
         </li>
-        <li class="page-item">
-          <a class="page-link" href="./#">Морские птицы</a>
+        <li class="header-page-item">
+          <a class="header-page-link" href="./#">Морские птицы</a>
         </li>
       </ul>
     </header>
 
-    <div class="header">
-      <div class="score">
-        Score:
-        <div class="score-number">0</div>
-      </div>
-    </div>
-
     <div class="quiz-wrapper">
 
       <div class="bird-question-container card">
-        <button class="btn btn-success next-level-btn">Next Level</button>
+        <button class="next-level-btn">Next Level</button>
         <div class="">
           <ul class="list-group-flush bird-question-wrapper">
             <li class="list-group-item bird-question-image">
@@ -105,19 +109,21 @@
     <footer class="footer card">
       <div class="footer-wrapper">
         <div class="footer-developer">
-          <p>Developed by <a href="https://github.com/Albedo-13" target="_blank">Albedo-13</a></p>
-        </div>
-        <div class="footer-dev-year">
-          <p>2022</p>
+          <a class="footer-link" href="https://github.com/Albedo-13" target="_blank">
+            <img src="./assets/icons/github.svg" alt="github author link">
+            <span>@Albedo-13 2022</span>
+          </a>
         </div>
         <div class="footer-course">
-          <p>RS School LOGO</p>
+          <a href="https://rs.school/js/">
+            <img src="./assets/icons/rsschool.svg" alt="course logo">
+          </a>
         </div>
       </div>
     </footer>
   </div>
 
-    <script src="js/bundle.js"></script>
+  <script src="js/bundle.js"></script>
 </body>
 
 </html>
