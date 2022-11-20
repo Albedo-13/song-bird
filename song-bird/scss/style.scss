@@ -29,6 +29,10 @@ p {
   margin: 0;
 }
 
+h3 {
+  margin: 0;
+}
+
 // bootstrap overflow styles
 .card,
 .list-group,
@@ -45,8 +49,8 @@ ul {
   padding: 0;
 }
 
-.mb-100px {
-  margin-bottom: 100px; // -
+.mb-60px {
+  margin-bottom: 60px; // -
 }
 
 
@@ -64,7 +68,8 @@ ul {
   position: absolute;
   width: 100%;
   height: 100%; // check to not cover footer
-  background-color: rgb(0, 0, 0, 0.7);
+  background-color: $color-gray;
+  // opacity: .7;
   bottom: 0;
   z-index: 10;
   color: white;
@@ -72,4 +77,9 @@ ul {
 
 .game-start {
   margin-top: 100px;
+}
+
+.start-game-btn,
+.game-over-btn {
+  border-radius: 7px;
 }

@@ -12,6 +12,7 @@
   .answers-list-item {
     padding: 10px 25px;
     list-style-type: none;
+    cursor: pointer;
 
     &:not(:last-child) {
       border-bottom: 1px solid $color-gray;

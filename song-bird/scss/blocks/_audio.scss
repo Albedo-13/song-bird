@@ -3,9 +3,10 @@
 }
 
 .audio-player {
-  border: 1px solid red; // -
-  // margin-bottom: 100px; // -
-  // display: none; // !
+  margin-top: 5px;
+  position: relative;
+  z-index: 2;
+  // border: 1px solid red; // -
 }
 
 .audio-play-btn {
@@ -197,6 +198,7 @@
   width: 25px;
   height: 25px;
   margin-top: 6px;
+  cursor: pointer;
 
   position: relative;
   z-index: 2;
@@ -216,11 +218,12 @@
   width: 100%;
 }
 
-.audio-player-1 {
+// .audio-player-1 {
 
-  // ! изменить название и в js тоже
-  // width: 80%;
-  .audio-timebar {
-    width: 79%;
-  }
-}
+//   // ! изменить название и в js тоже
+//   // width: 80%;
+//   margin-top: 5px;
+//   .audio-timebar {
+//     width: 79%;
+//   }
+// }

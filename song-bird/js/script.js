@@ -3,18 +3,17 @@ import loadAudioPlayerControls from "./modules/audio-player";
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Ну че, рефакторинг?
-  // TODO: по возможности использовать id-шники
-  // TODO: скрыть correntAnswerNumber и переработать гибкие числа
+  console.log("Самооценка: 250/270 (не реализован Extra scope -20). Остальные задачи выполнены в соответствии с условием");
 
+  // Ну че, рефакторинг?
+  // TODO: скрыть correntAnswerNumber
   // TODO: Семантические теги
   // TODO: В description и question scss переработать вложенности
   // TODO: blue -> cornflower
+  // TODO: убрать селекторы по тегу h3, h4
   // TODO: почистить мертвые стили // - и // ?
-  // TODO: В описании птицы изменить стили
   // TODO: дизайн (общий стиль, цветокор, плееры, БЭМ, адаптив, переработать старт окно)
   // TODO: вебпак (генерация, подсчет очков, мб окна)
-  // TODO: отдельный текст для победы в 30 баллов (для всех очков)
 
   const pagination = document.querySelector('.header-pagination');
   const startBtn = document.querySelector('.start-game-btn');
@@ -199,13 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
     birdsQuiz.innerHTML = "";
     birdDescr.innerHTML = "";
 
-    // TODO: 30 - гибкое число
     quizWin.innerHTML = `
     <div class="jumbotron card game-over">
       <h1 class="display-3 text-center">Поздравляем!</h1>
       <p class="lead text-center">Вы прошли викторину и набрали ${score} из ${calculateMaxScore()} возможных баллов</p>
       <hr class="my-4">
-      <button class="btn btn-success btn-next game-over-btn">Попробовать еще раз!</button>
+      <button class="game-over-btn">Попробовать еще раз!</button>
     </div>
     `;
 
@@ -289,11 +287,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <li class="list-group-item">
               <h4>${birdsData[page][id].name}</h4>
             </li>
-            <li class="list-group-item"><span>${birdsData[page][id].species}</span></li>
             <li class="list-group-item">
-              <div class="audio-player-1">
-                ${generateAudioPlayer("audio-player-card", birdsData[page][id].audio)}
-              </div>
+              <p class="bird-details-latin">${birdsData[page][id].species}</p>
+            </li>
+            <li class="list-group-item">
+              ${generateAudioPlayer("audio-player-card", birdsData[page][id].audio)}
             </li>
           </ul>
           

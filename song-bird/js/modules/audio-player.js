@@ -10,7 +10,7 @@ function loadAudioPlayerControls(selector) {
 
   const audioVolumeBtn = audioPlayer.querySelector(".audio-volume-btn");
   const audioVolumeImg = audioVolumeBtn.querySelector("img");
-  const audioVolumeBar = document.querySelector(".audio-volume-bar");
+  const audioVolumeBar = audioPlayer.querySelector(".audio-volume-bar");
 
   audioSrc.addEventListener('loadeddata', () => {
     audioInfo.querySelectorAll("span")[0].innerHTML = "0:00";

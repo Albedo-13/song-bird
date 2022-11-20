@@ -4,22 +4,27 @@
   width: inherit;
   max-width: inherit;
   padding: 6px 25px;
+  z-index: 11;
 
   &-wrapper {
     display: flex;
     justify-content: space-between;
   }
 
-  &-developer,
+  &-link,
   &-course {
     height: 45px;
     max-width: auto;
     opacity: .75;
     transition: 0.25s all;
 
+    text-decoration: none;
+    color: #fff;
+
     &:hover {
       opacity: 1;
       transition: 0.25s all;
+      color: #fff;
     }
 
     img {
@@ -30,15 +35,6 @@
     span {
       padding: 10px 7px 13px;
       font-size: 18px;
-    }
-  }
-
-  &-link {
-    text-decoration: none;
-    color: #fff;
-
-    &:hover {
-      color: #fff;
     }
   }
 }
