@@ -1,19 +1,18 @@
-.bird-descr-container {
-  padding: 13px;
-}
-
-.bird-details-wrapper {
-  display: flex;
-}
-
-
-.bird-details-mod {
-  padding-left: 15px;
-  width: 70%;
-}
-
 .bird-details {
   height: 100%;
+
+  &-wrapper {
+    display: flex;
+  }
+
+  &-mod {
+    padding-left: 15px;
+    width: 70%;
+  }
+
+  &-container {
+    padding: 13px;
+  }
 }
 
 .bird-image {

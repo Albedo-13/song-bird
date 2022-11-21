@@ -5,14 +5,13 @@
 
 body {
   background-color: #222;
-  color: white;
+  color: #fff;
 }
 
 .container {
   margin: 0 auto;
   max-width: 1100px;
   padding: 0;
-  position: relative;
 }
 
 .hide {
@@ -44,6 +43,25 @@ ul {
 
 .mb-60px {
   margin-bottom: 60px;
+}
+
+.quiz-start {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #222;
+  color: #fff;
+  z-index: 10;
+}
+
+.game-start {
+  margin-top: 100px;
+}
+
+.start-game-btn,
+.game-over-btn {
+  border-radius: 7px;
 }
 
 .audio-player audio {
@@ -80,13 +98,6 @@ ul {
   height: 25px;
 }
 
-.audio-progress {
-  height: 100%;
-  width: 0px;
-  background-color: pink;
-  color: magenta;
-}
-
 .audio-time {
   color: #fff;
   display: -webkit-box;
@@ -111,12 +122,6 @@ ul {
           appearance: none;
   background: none;
   overflow: hidden;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   cursor: pointer;
   width: 89%;
   height: 100%;
@@ -329,7 +334,7 @@ ul {
   display: block;
   -webkit-transform: skew(15deg);
           transform: skew(15deg);
-  color: white;
+  color: #fff;
   text-decoration: none;
   cursor: default;
 }
@@ -424,23 +429,20 @@ ul {
   background-color: #6b77c0;
 }
 
-.bird-descr-container {
-  padding: 13px;
+.bird-details {
+  height: 100%;
 }
-
 .bird-details-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-
 .bird-details-mod {
   padding-left: 15px;
   width: 70%;
 }
-
-.bird-details {
-  height: 100%;
+.bird-details-container {
+  padding: 13px;
 }
 
 .bird-image {
@@ -511,6 +513,9 @@ ul {
   }
 }
 @media (max-width: 767px) {
+  .game-start {
+    margin-top: 25px;
+  }
   .header-pagination {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -543,13 +548,13 @@ ul {
         -ms-flex-positive: 1;
             flex-grow: 1;
   }
-  .bird-question-audio h3 {
+  .bird-question-audio .bird-name-anon {
     margin: 10px 0;
   }
   .bird-question-image {
     margin: 0 auto;
   }
-  .bird-question-audio h3 {
+  .bird-question-audio .bird-name-anon {
     text-align: center;
   }
   .birds-quiz-container {
@@ -568,7 +573,7 @@ ul {
     width: 100%;
     padding: 0;
   }
-  .bird-details-mod h4 {
+  .bird-details-mod .bird-name {
     text-align: center;
   }
   .bird-details-mod .bird-details-latin {
@@ -629,22 +634,4 @@ ul {
         -ms-flex-align: end;
             align-items: flex-end;
   }
-}
-.quiz-start {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #222;
-  bottom: 0;
-  z-index: 10;
-  color: white;
-}
-
-.game-start {
-  margin-top: 100px;
-}
-
-.start-game-btn,
-.game-over-btn {
-  border-radius: 7px;
 }/*# sourceMappingURL=style.css.map */

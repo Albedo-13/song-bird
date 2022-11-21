@@ -10,6 +10,10 @@
 }
 
 @media (max-width: 767px) {
+  .game-start {
+    margin-top: 25px;
+  }
+
   .header-pagination {
     flex-direction: column;
   }
@@ -40,7 +44,7 @@
 
   .bird-question-audio {
     
-    h3 {
+    .bird-name-anon {
       margin: 10px 0;
     }
   }
@@ -50,7 +54,7 @@
   }
 
   .bird-question-audio {
-    h3 {
+    .bird-name-anon {
       text-align: center;
     }
   }
@@ -71,7 +75,7 @@
     width: 100%;
     padding: 0;
 
-    h4 {
+    .bird-name {
       text-align: center;
     }
 

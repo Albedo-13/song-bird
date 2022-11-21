@@ -6,7 +6,6 @@
   margin-top: 5px;
   position: relative;
   z-index: 2;
-  // border: 1px solid red; // -
 }
 
 .audio-play-btn {
@@ -16,12 +15,12 @@
 
   min-height: 40px;
   min-width: 40px;
-  margin-right: 15px; // ~
+  margin-right: 15px;
 
   position: relative;
   z-index: 2;
 
-  border: 2px solid $color-blue;
+  border: 2px solid $color-corflower;
   border-radius: 100%;
   cursor: pointer;
 
@@ -29,13 +28,6 @@
     width: 25px;
     height: 25px;
   }
-}
-
-.audio-progress {
-  height: 100%;
-  width: 0px;
-  background-color: pink; // ?
-  color: magenta; // ?
 }
 
 .audio-time {
@@ -57,13 +49,10 @@
 }
 
 .audio-timebar {
-  //X
   appearance: none;
   background: none;
   overflow: hidden;
 
-  display: flex; // ?
-  align-items: center; // ?
   cursor: pointer;
 
   width: 89%;
@@ -87,7 +76,7 @@
   &::-webkit-slider-thumb {
     content: '';
     appearance: none;
-    box-shadow: calc(-1100px - 15px / 2) 0 0 1100px $color-blue;
+    box-shadow: calc(-1100px - 15px / 2) 0 0 1100px $color-corflower;
 
     background: #fff;
     height: 15px;
@@ -96,7 +85,7 @@
   }
 
   &::-moz-range-progress {
-    background: $color-blue;
+    background: $color-corflower;
   }
 
   &::-moz-range-track {
@@ -104,7 +93,7 @@
   }
 
   &::-ms-fill-lower {
-    background: $color-blue;
+    background: $color-corflower;
   }
 
   &::-ms-fill-upper {
@@ -118,8 +107,7 @@
   display: inline-block;
   height: 25px;
   width: 25px;
-
-  margin-left: 15px; // ~
+  margin-left: 15px;
 
   img {
     max-width: 100%;
@@ -135,12 +123,11 @@
 }
 
 .audio-volume-bar-container {
-  opacity: 0; // 0-1
+  opacity: 0;
   transition: 0.15s all;
 }
 
 .audio-volume-bar {
-  //X
   appearance: none;
   background: none;
   overflow: hidden;
@@ -168,7 +155,7 @@
   &::-webkit-slider-thumb {
     content: '';
     appearance: none;
-    box-shadow: calc(-100px - 15px / 2) 0 0 100px $color-blue;
+    box-shadow: calc(-100px - 15px / 2) 0 0 100px $color-corflower;
 
     background: #fff;
     height: 15px;
@@ -177,7 +164,7 @@
   }
 
   &::-moz-range-progress {
-    background: $color-blue;
+    background: $color-corflower;
   }
 
   &::-moz-range-track {
@@ -185,7 +172,7 @@
   }
 
   &::-ms-fill-lower {
-    background: $color-blue;
+    background: $color-corflower;
   }
 
   &::-ms-fill-upper {
@@ -217,13 +204,3 @@
 .bird-question-audio {
   width: 100%;
 }
-
-// .audio-player-1 {
-
-//   // ! изменить название и в js тоже
-//   // width: 80%;
-//   margin-top: 5px;
-//   .audio-timebar {
-//     width: 79%;
-//   }
-// }

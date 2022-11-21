@@ -14,9 +14,8 @@
 </head>
 
 <body>
-  <div class="container">
-
-    <header>
+  <header>
+    <div class="container">
       <div class="header-wrapper">
         <a class="header-logo" href="./#">
           <img src="./assets/icons/logo.webp" alt="site logo">
@@ -47,63 +46,67 @@
           <a class="header-page-link" href="./#">Морские птицы</a>
         </li>
       </ul>
-    </header>
+    </div>
+  </header>
 
-    <div class="quiz-wrapper">
+  <main>
+    <div class="container">
+      <div class="quiz-wrapper">
 
-      <div class="bird-question-container card">
-        <button class="next-level-btn">Следующий вопрос</button>
-        <div class="">
-          <ul class="list-group-flush bird-question-wrapper">
-            <li class="list-group-item bird-question-image">
-              <div class="bird-image-anon">
-                <img src="/assets/img/anon-bird.jpg" alt="bird">
-              </div>
-            </li>
-            <li class="list-group-item bird-question-audio">
-              <h3>******</h3>
-              <div class="random-audio">
-                <!-- Generate audio player -->
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="quiz-start">
-        <div class="game-start">
-          <h1 class="text-center">Добрый день!</h1>
-          <p class="text-center">В этой викторине вам предстоит угадывать имена птиц по их голосу</p>
-          <hr class="my-4">
-          <button class="start-game-btn">Начать!</button>
-        </div>
-      </div>
-
-      <div class="quiz-win">
-        <!-- Generate win window -->
-      </div>
-
-      <div class="row row-cols-2 mb-60px">
-        <div class="birds-quiz-container col-12 col-sm-12 col-md-6">
-          <!-- Generate quiz -->
-        </div>
-
-        <div class="bird-descr-container col-12 col-sm-12 col-md-6">
-          <!-- Generate bird description & audio player -->
-          <div class="bird-details card">
-            <div class="card-body" style="display: flex;">
-              <p class="instruction" style="display: block;">
-                <span>Послушайте плеер.</span>
-                <span>Выберите птицу из списка</span>
-              </p>
-            </div>
+        <div class="bird-question-container card">
+          <button class="next-level-btn">Следующий вопрос</button>
+          <div class="">
+            <ul class="list-group-flush bird-question-wrapper">
+              <li class="list-group-item bird-question-image">
+                <div class="bird-image-anon">
+                  <img src="/assets/img/anon-bird.jpg" alt="bird">
+                </div>
+              </li>
+              <li class="list-group-item bird-question-audio">
+                <h3 class="bird-name-anon">******</h3>
+                <div class="random-audio">
+                  <!-- Generate audio player -->
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
 
+        <div class="quiz-start">
+          <div class="game-start">
+            <h1 class="text-center">Добрый день!</h1>
+            <p class="text-center">В этой викторине вам предстоит угадывать имена птиц по их голосу</p>
+            <hr class="my-4">
+            <button class="start-game-btn">Начать!</button>
+          </div>
+        </div>
+
+        <div class="quiz-win">
+          <!-- Generate win window -->
+        </div>
+
+        <div class="row row-cols-2 mb-60px">
+          <div class="birds-quiz-container col-12 col-sm-12 col-md-6">
+            <!-- Generate quiz -->
+          </div>
+
+          <div class="bird-details-container col-12 col-sm-12 col-md-6">
+            <!-- Generate bird description & audio player -->
+            <div class="bird-details card">
+              <div class="card-body" style="display: flex;">
+                <p class="instruction" style="display: block;">
+                  <span>Послушайте плеер.</span>
+                  <span>Выберите птицу из списка</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
     </div>
+  </main>
 
+  <div class="container">
     <footer class="footer card">
       <div class="footer-wrapper">
         <a class="footer-link" href="https://github.com/Albedo-13" target="_blank">

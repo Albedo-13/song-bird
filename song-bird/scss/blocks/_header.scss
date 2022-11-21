@@ -39,10 +39,8 @@
     flex-wrap: wrap;
     margin-bottom: 25px;
 
-    // width: 100%;
-
     .active {
-      background-color: $color-blue;
+      background-color: $color-corflower;
     }
   }
 
@@ -74,7 +72,7 @@
     display: block;
     transform: skew(15deg);
 
-    color: white;
+    color: #fff;
     text-decoration: none;
     cursor: default;
 

@@ -1,5 +1,5 @@
 .quiz-wrapper {
-  position: relative; // -
+  position: relative;
 }
 
 .birds-quiz-container {
@@ -32,20 +32,16 @@
   }
 
   .error {
-    // background-color: red;
-  
     &::before {
       content: '';
-      background-color: #b90e0a; // -
+      background-color: $color-error;
     }
   }
 
   .success {
-    // background-color: green;
-  
     &::before {
       content: '';
-      background-color: $color-dark-blue;
+      background-color: $color-dark-corflower;
     }
   }
   
